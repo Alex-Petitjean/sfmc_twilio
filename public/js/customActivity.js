@@ -14,7 +14,12 @@ define([
     var currentStep = steps[0].key;
 
     $(window).ready(onRender);
-
+    connection;trigger('requestSchema');
+    connection.on('requestedSchema', function (data) {
+                  // save schema
+                  console.log('*** Schema ***', json.stringify(data['schema']));
+    });
+    
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
@@ -102,7 +107,7 @@ define([
             "authToken": authToken,
             "messagingService": messagingService,
             "body": body,
-            "to": "{{Contact.Attribute.TwilioV1.TwilioNumber}}" //<----This should map to your data extension name and phone number column
+            "to": "{{Event.BB57F55D-A82A-44DB-8A4C-EE28F7F19D18.TwilioNumber}}" //<----This should map to your data extension name and phone number column
         }];
 
         payload['metaData'].isConfigured = true;
